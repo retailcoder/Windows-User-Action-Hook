@@ -99,7 +99,16 @@
   <ItemGroup>
     <Compile Include="ApplicationWatcher.cs" />
     <Compile Include="ClipboardWatcher.cs" />
+    <Compile Include="Helpers\MessageHandler.cs" />
     <Compile Include="Helpers\SharedMessagePump.cs" />
+    <Compile Include="Hooks\Hotkeys\HotkeyEventArgs.cs" />
+    <Compile Include="Hooks\Hotkeys\HotkeyHook.cs" />
+    <Compile Include="Hooks\Hotkeys\HotkeyHookInfo.cs" />
+    <Compile Include="Hooks\Hotkeys\HotkeyInfo.cs" />
+    <Compile Include="Hooks\Hotkeys\HotkeyListener.cs" />
+    <Compile Include="Hooks\Hotkeys\KeyModifier.cs" />
+    <Compile Include="Hooks\Library\Kernel32.cs" />
+    <Compile Include="HotkeyWatcher.cs" />
     <Compile Include="KeyboardWatcher.cs" />
     <Compile Include="MouseWatcher.cs" />
     <Compile Include="PrintWatcher.cs" />

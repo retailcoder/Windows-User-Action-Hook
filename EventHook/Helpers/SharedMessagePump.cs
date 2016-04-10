@@ -5,21 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Windows.Threading;
 
 namespace EventHook.Helpers
 {
     internal class SharedMessagePump
     {
-        private static bool _hasUIThread = false;
+        private static bool _hasUIThread;
 
-        static Lazy<TaskScheduler> _scheduler;
-        static Lazy<MessageHandler> _messageHandler;
+        private static readonly Lazy<TaskScheduler> Scheduler;
+        internal static readonly Lazy<MessageHandler> MessageHandler;
 
         static SharedMessagePump()
         {
-            _scheduler = new Lazy<TaskScheduler>(() =>
+            Scheduler = new Lazy<TaskScheduler>(() =>
             {
                 Dispatcher dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
                 if (dispatcher != null)
@@ -56,7 +55,7 @@ namespace EventHook.Helpers
 
             });
 
-            _messageHandler = new Lazy<MessageHandler>(() =>
+            MessageHandler = new Lazy<MessageHandler>(() =>
                 {
                     MessageHandler msgHandler = null;
 
@@ -84,7 +83,7 @@ namespace EventHook.Helpers
 
         internal static TaskScheduler GetTaskScheduler()
         {
-            return _scheduler.Value;
+            return Scheduler.Value;
         }
 
         internal static IntPtr GetHandle()
@@ -103,23 +102,8 @@ namespace EventHook.Helpers
                 catch { }
             }
 
-            return _messageHandler.Value.Handle;
+            return MessageHandler.Value.Handle;
         }
 
     }
-
-    internal class MessageHandler : NativeWindow
-    {
-
-        internal MessageHandler()
-        {
-            CreateHandle(new CreateParams());
-        }
-
-        protected override void WndProc(ref Message msg)
-        {
-            base.WndProc(ref msg);
-        }
-    }
-
 }
